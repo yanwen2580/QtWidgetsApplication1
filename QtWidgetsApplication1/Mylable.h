@@ -4,7 +4,6 @@
 #include <QLabel>
 
 class Mylable :public QLabel {
-
     Q_OBJECT
 public:
    explicit Mylable(QWidget * parent=0);
@@ -12,7 +11,7 @@ public:
     //鼠标进入事件
     void enterEvent(QEnterEvent* event);
     //鼠标离开事件
-    void leaveEvent(QEvent* event);
+    virtual  void leaveEvent(QEvent* event);
     //鼠标按下
     virtual void mousePressEvent(QMouseEvent* event);
     //释放就会产生鼠标事件
@@ -21,6 +20,8 @@ public:
     virtual void mouseDoubleClickEvent(QMouseEvent* event);
     //内追踪鼠标事件事件
     virtual void mouseMoveEvent(QMouseEvent* event);
+    //通过event事件分发 拦截 鼠标按下事件
+    bool event(QEvent *event);
 signals:
 
 public slots:

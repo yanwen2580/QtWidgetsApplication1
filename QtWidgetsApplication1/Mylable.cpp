@@ -7,9 +7,10 @@
 #include <qmessagebox.h>
 #include <QMouseEvent>
 
+
 Mylable::Mylable(QWidget* parent):QLabel(parent)
 {
-
+	this->setMouseTracking(true);
 }
 Mylable::~Mylable()
 {
@@ -38,9 +39,9 @@ void Mylable::mousePressEvent(QMouseEvent* event)
 
 void Mylable::mouseReleaseEvent(QMouseEvent* event)
 {
-	/*QMessageBox* box = new QMessageBox(this);
+	QMessageBox* box = new QMessageBox(this);
 	QString str = QString("鼠标释放了位置在 %1 %2").arg(event->x()).arg(event->y());
-	box->information(this, "222！", str);*/
+	box->information(this, "222！", str);
 }
 
 void Mylable::mouseDoubleClickEvent(QMouseEvent* event)
@@ -55,4 +56,18 @@ void Mylable::mouseMoveEvent(QMouseEvent* event)
 	QMessageBox* box = new QMessageBox(this);
 	QString str = QString("追踪鼠标事件 %1 %2").arg(event->x()).arg(event->y());
 	box->information(this, "222！", str);
+}
+
+//鼠标事件拦截器
+//鼠标事件分发
+bool Mylable::event(QEvent* event)
+{
+	if (event->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent* ev = static_cast<QMouseEvent*>(event);
+		QString str = QString("鼠标释放了位置在 %1 %2").arg(ev->x()).arg(ev->y());
+		return true;//true 代表自己处理这个事件 ,不在向下分发
+	}
+
+	return false;
 }
